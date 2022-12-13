@@ -20,10 +20,11 @@ defmodule SmexTrackWeb.Router do
     get "/", PageController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SmexTrackWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", SmexTrackWeb do
+    pipe_through :api
+
+    resources "/supply_batches", SupplyBatchController, except: [:new, :edit]
+  end
 
   # Enables LiveDashboard only for development
   #
