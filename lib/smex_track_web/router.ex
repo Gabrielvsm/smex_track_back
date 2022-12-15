@@ -24,6 +24,7 @@ defmodule SmexTrackWeb.Router do
     pipe_through :api
 
     resources "/supply_batches", SupplyBatchController, except: [:new, :edit]
+    resources "/production_batches", ProductionBatchController, except: [:new, :edit]
   end
 
   # Enables LiveDashboard only for development

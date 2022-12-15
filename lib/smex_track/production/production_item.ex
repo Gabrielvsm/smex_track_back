@@ -6,9 +6,10 @@ defmodule SmexTrack.Production.ProductionItem do
     field :amount, :float
     field :price_by_amount, :float
     field :item_id, :id
+    field :production_batch_id, :id
 
     belongs_to :items, SmexTrack.Supply.Item
-    belongs_to :production_items, SmexTrack.Production.ProductionBatch
+    belongs_to :production_batches, SmexTrack.Production.ProductionBatch
 
     timestamps()
   end
