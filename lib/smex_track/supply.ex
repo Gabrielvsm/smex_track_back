@@ -36,6 +36,7 @@ defmodule SmexTrack.Supply do
 
   """
     def get_supply_batch!(id), do: Repo.get!(SupplyBatch, id) |> Repo.preload(:items)
+    def get_supply_batch(id), do: Repo.get(SupplyBatch, id) |> Repo.preload(:items)
 
   @doc """
   Creates a supply_batch.
@@ -132,6 +133,7 @@ defmodule SmexTrack.Supply do
 
   """
   def get_item!(id), do: Repo.get!(Item, id)
+  def get_item(id), do: Repo.get(Item, id)
 
   @doc """
   Creates a item and associates it with its supply_batch.

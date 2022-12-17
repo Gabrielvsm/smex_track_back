@@ -15,4 +15,8 @@ defmodule SmexTrackWeb.ProductionBatchView do
       id: production_batch.id
     }
   end
+
+  def render("error.json", %{error: error}) do
+    %{error: error}
+  end
 end
