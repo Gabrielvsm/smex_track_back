@@ -8,6 +8,7 @@ defmodule SmexTrack.Supply.Item do
     field :price, :float
 
     belongs_to :supply_batch, SmexTrack.Supply.SupplyBatch
+    has_many :production_items, SmexTrack.Production.ProductionItem
 
     timestamps()
   end

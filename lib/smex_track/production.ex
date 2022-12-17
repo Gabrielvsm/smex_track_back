@@ -7,6 +7,7 @@ defmodule SmexTrack.Production do
   alias SmexTrack.Repo
 
   alias SmexTrack.Production.ProductionBatch
+  alias SmexTrack.Supply
 
   @doc """
   Returns the list of production_batches.
@@ -145,9 +146,14 @@ defmodule SmexTrack.Production do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_production_item(attrs \\ %{}) do
+  def create_production_item(attrs \\ %{}, production_batch) do
+    item = Supply.get_item!(attrs["item_id"])
+    inspect item
+
     %ProductionItem{}
     |> ProductionItem.changeset(attrs)
+    |> Ecto.Changeset.put_assoc(:production_batch, production_batch)
+    |> Ecto.Changeset.put_assoc(:item, item)
     |> Repo.insert()
   end
 
