@@ -139,22 +139,31 @@ defmodule SmexTrack.Production do
 
   ## Examples
 
-      iex> create_production_item(%{field: value})
+      iex> create_production_item(%{field: value}, production_batch)
       {:ok, %ProductionItem{}}
 
-      iex> create_production_item(%{field: bad_value})
+      iex> create_production_item(%{field: bad_value}, production_batch)
       {:error, %Ecto.Changeset{}}
 
   """
   def create_production_item(attrs \\ %{}, production_batch) do
     item = Supply.get_item!(attrs["item_id"])
-    inspect item
 
     %ProductionItem{}
     |> ProductionItem.changeset(attrs)
     |> Ecto.Changeset.put_assoc(:production_batch, production_batch)
     |> Ecto.Changeset.put_assoc(:item, item)
+    |> calculate_price_by_amount(item)
     |> Repo.insert()
+  end
+
+  defp calculate_price_by_amount(changeset, item) do
+    item_price = item.price
+    item_amount = item.amount
+    amount = changeset.changes.amount
+    percent_index = amount / item_amount
+
+    Ecto.Changeset.change changeset, %{price_by_amount: item_price * percent_index}
   end
 
   @doc """
