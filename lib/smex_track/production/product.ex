@@ -3,11 +3,12 @@ defmodule SmexTrack.Production.Product do
   import Ecto.Changeset
 
   schema "products" do
-    field :name, :string
-    field :price, :float
-    field :prod_batch_id, :id
+    field :name,                 :string
+    field :cost,                 :float
+    field :price,                :float
 
-    belongs_to :production_batches, SmexTrack.Production.ProductionBatch
+    belongs_to :production_batch, SmexTrack.Production.ProductionBatch
+    has_many :production_items, SmexTrack.Production.ProductionItem
 
     timestamps()
   end
@@ -15,7 +16,7 @@ defmodule SmexTrack.Production.Product do
   @doc false
   def changeset(product, attrs) do
     product
-    |> cast(attrs, [:name, :price])
-    |> validate_required([:name, :price])
+    |> cast(attrs, [:name])
+    |> validate_required([:name])
   end
 end

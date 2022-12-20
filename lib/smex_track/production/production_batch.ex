@@ -6,7 +6,6 @@ defmodule SmexTrack.Production.ProductionBatch do
     field :date, :date
     field :total_cost, :float, default: 0.0
 
-    has_many :production_items, SmexTrack.Production.ProductionItem
     has_many :products, SmexTrack.Production.Product
 
     timestamps()
@@ -15,7 +14,7 @@ defmodule SmexTrack.Production.ProductionBatch do
   @doc false
   def changeset(production_batch, attrs) do
     production_batch
-    |> cast(attrs, [:date, :total_cost])
-    |> validate_required([:date, :total_cost])
+    |> cast(attrs, [:date])
+    |> validate_required([:date])
   end
 end
