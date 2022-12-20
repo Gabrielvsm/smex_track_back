@@ -7,7 +7,7 @@ defmodule SmexTrack.Production.ProductionItem do
     field :price_by_amount, :float, default: 0.0
 
     belongs_to :item, SmexTrack.Supply.Item
-    belongs_to :production_batch, SmexTrack.Production.ProductionBatch
+    belongs_to :product, SmexTrack.Production.Product
 
     timestamps()
   end
@@ -15,8 +15,8 @@ defmodule SmexTrack.Production.ProductionItem do
   @doc false
   def changeset(production_item, attrs) do
     production_item
-    |> cast(attrs, [:amount, :price_by_amount, :item_id, :production_batch_id])
-    |> validate_required([:amount, :price_by_amount])
+    |> cast(attrs, [:amount, :item_id])
+    |> validate_required([:amount, :item_id])
     |> validate_item()
   end
 

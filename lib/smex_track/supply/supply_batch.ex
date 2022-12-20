@@ -14,7 +14,7 @@ defmodule SmexTrack.Supply.SupplyBatch do
   @doc false
   def changeset(supply_batch, attrs) do
     supply_batch
-    |> cast(attrs, [:date, :total_price])
-    |> validate_required([:date, :total_price])
+    |> cast(attrs, [:date])
+    |> validate_required([:date])
   end
 end

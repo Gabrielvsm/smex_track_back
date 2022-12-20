@@ -3,7 +3,6 @@ defmodule SmexTrackWeb.ProductionBatchController do
 
   alias SmexTrack.Production
   alias SmexTrack.Production.ProductionBatch
-  alias SmexTrack.Production.ProductionItem
 
   action_fallback SmexTrackWeb.FallbackController
 
@@ -13,23 +12,13 @@ defmodule SmexTrackWeb.ProductionBatchController do
   end
 
   def create(conn, %{"production_batch" => production_batch_params}) do
-    # TODO: see possibility to use commom helper module with Supply and other contexts
-    unless Map.has_key?(production_batch_params, "items"), do: render(conn, "error.json", error: "Missing items used")
-    unless all_items_valid?(production_batch_params["items"]), do: render(conn, "error.json", error: "There are invalid items!")
-
+    # TODO: create each product from the items used
+    # prod_batch: several products; each product: several prod_items
     with {:ok, %ProductionBatch{} = production_batch} <- Production.create_production_batch(production_batch_params) do
-      Enum.each(production_batch_params["items"], &Production.create_production_item(&1, production_batch))
-
       conn
       |> put_status(:created)
       |> put_resp_header("location", Routes.production_batch_path(conn, :show, production_batch))
       |> render("show.json", production_batch: production_batch)
-    end
-  end
-
-  defp all_items_valid?(items) do
-    Enum.reduce items, true, fn current, initial ->
-      initial && ProductionItem.changeset(%ProductionItem{}, current).valid?
     end
   end
 
